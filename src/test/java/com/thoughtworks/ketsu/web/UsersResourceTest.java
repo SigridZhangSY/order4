@@ -84,4 +84,14 @@ public class UsersResourceTest extends ApiSupport {
         assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
 
     }
+
+    @Test
+    public void should_return_400_when_name_is_null(){
+        User user = userRepository.createUser(TestHelper.userMap("john"));
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        Map<String, Object> map = TestHelper.orderMap("john",product.getId());
+        map.remove("name");
+        Response post = post("/users/" + user.getId() + "/orders", map);
+        assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
+    }
 }
