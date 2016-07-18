@@ -1,5 +1,6 @@
 package com.thoughtworks.ketsu.web;
 
+import com.thoughtworks.ketsu.infrastructure.core.User;
 import com.thoughtworks.ketsu.infrastructure.core.UserRepository;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
@@ -53,9 +55,14 @@ public class UsersResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_200_when_find_user_by_id(){
-        Response get = get("/users/1");
+    public void should_return_detail_when_find_user_by_id(){
+        User user = userRepository.createUser(TestHelper.userMap("john"));
+        Response get = get("/users/" + user.getId());
         assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final Map<String, Object> user_res = get.readEntity(Map.class);
+        assertThat(user_res.get("id"), is(user.getId()));
+        assertThat(user_res.get("uri"), is("/users/" + user.getId()));
+
 
     }
 }

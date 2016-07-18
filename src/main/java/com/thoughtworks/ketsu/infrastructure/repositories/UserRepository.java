@@ -23,7 +23,12 @@ public class UserRepository implements com.thoughtworks.ketsu.infrastructure.cor
     }
 
     @Override
-    public Optional<User> findUserByNname(String name) {
+    public Optional<User> findUserByName(String name) {
         return Optional.ofNullable(userMapper.findUserByName(name));
+    }
+
+    @Override
+    public Optional<User> findUserById(int userId) {
+        return Optional.ofNullable(userMapper.findUserById(userId));
     }
 }

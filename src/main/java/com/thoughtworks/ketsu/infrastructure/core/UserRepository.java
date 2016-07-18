@@ -8,5 +8,6 @@ import java.util.Optional;
  */
 public interface UserRepository {
     User createUser(Map<String, Object> info);
-    Optional<User> findUserByNname(String name);
+    Optional<User> findUserByName(String name);
+    Optional<User> findUserById(int userId);
 }

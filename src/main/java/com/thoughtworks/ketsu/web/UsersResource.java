@@ -2,7 +2,6 @@ package com.thoughtworks.ketsu.web;
 
 import com.thoughtworks.ketsu.infrastructure.core.User;
 import com.thoughtworks.ketsu.infrastructure.core.UserRepository;
-import com.thoughtworks.ketsu.infrastructure.records.UserRecord;
 import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
@@ -11,6 +10,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by syzhang on 7/18/16.
@@ -20,13 +20,13 @@ import java.util.Map;
 public class UsersResource {
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(Map<String, Object> info,
                                @Context Routes routes,
                                @Context UserRepository userRepository){
         if(info.getOrDefault("name", "").toString().trim().isEmpty())
             throw new InvalidParameterException("name is required.");
-        if(userRepository.findUserByNname(String.valueOf(info.get("name"))).isPresent())
+        if(userRepository.findUserByName(String.valueOf(info.get("name"))).isPresent())
             return Response.status(Response.Status.BAD_REQUEST).build();
 
         User user = userRepository.createUser(info);
@@ -35,8 +35,9 @@ public class UsersResource {
 
     @GET
     @Path("{userId}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String findUserById(){
-        return "OK";
+    @Produces(MediaType.APPLICATION_JSON)
+    public User findUserById(@PathParam("userId") int userId,
+                             @Context UserRepository userRepository){
+        return userRepository.findUserById(userId).orElseThrow(() -> new NotFoundException("user not exists"));
     }
 }

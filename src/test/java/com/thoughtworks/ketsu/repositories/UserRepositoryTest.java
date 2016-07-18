@@ -32,7 +32,15 @@ public class UserRepositoryTest {
     @Test
     public void should_find_user_by_name(){
         User user = userRepository.createUser(TestHelper.userMap("john"));
-        User user_res = userRepository.findUserByNname(user.getName()).orElseThrow(() -> new NotFoundException("user not exists"));
+        User user_res = userRepository.findUserByName(user.getName()).orElseThrow(() -> new NotFoundException("user not exists"));
+        assertThat(user_res.getId(), is(user.getId()));
+
+    }
+
+    @Test
+    public void should_find_user_by_id(){
+        User user = userRepository.createUser(TestHelper.userMap("john"));
+        User user_res = userRepository.findUserById(user.getId()).orElseThrow(() -> new NotFoundException("user not exists"));
         assertThat(user_res.getId(), is(user.getId()));
 
     }
