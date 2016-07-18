@@ -40,4 +40,11 @@ public class UsersResource {
                              @Context UserRepository userRepository){
         return userRepository.findUserById(userId).orElseThrow(() -> new NotFoundException("user not exists"));
     }
+
+    @POST
+    @Path("{userId}/orders")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createOrder(){
+        return Response.status(201).build();
+    }
 }
