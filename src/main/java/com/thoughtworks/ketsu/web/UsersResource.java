@@ -6,9 +6,7 @@ import com.thoughtworks.ketsu.infrastructure.records.UserRecord;
 import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -33,5 +31,12 @@ public class UsersResource {
 
         User user = userRepository.createUser(info);
         return Response.created(routes.userUrl(user)).build();
+    }
+
+    @GET
+    @Path("{userId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String findUserById(){
+        return "OK";
     }
 }

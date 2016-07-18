@@ -51,4 +51,11 @@ public class UsersResourceTest extends ApiSupport {
         Response post = post("/users", new HashMap<String, Object>());
         assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
     }
+
+    @Test
+    public void should_return_200_when_find_user_by_id(){
+        Response get = get("/users/1");
+        assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+
+    }
 }
