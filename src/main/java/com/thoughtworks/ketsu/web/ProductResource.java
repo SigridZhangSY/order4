@@ -3,6 +3,7 @@ package com.thoughtworks.ketsu.web;
 import com.thoughtworks.ketsu.infrastructure.core.Product;
 import com.thoughtworks.ketsu.infrastructure.core.ProductRepository;
 import com.thoughtworks.ketsu.infrastructure.records.ProductRecord;
+import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
 import javax.ws.rs.Consumes;
@@ -25,7 +26,10 @@ public class ProductResource {
     public Response createProduct(Map<String, Object> info,
                                   @Context Routes routes,
                                   @Context ProductRepository productRepository){
-
+        if(info.getOrDefault("name", "").toString().trim().isEmpty() ||
+                info.getOrDefault("description", "").toString().trim().isEmpty() ||
+                    info.getOrDefault("price", "").toString().trim().isEmpty())
+            throw new InvalidParameterException("name, description and price are required.");
         Product product = productRepository.createProduct(info);
         return Response.created(routes.productUrl(product)).build();
     }
