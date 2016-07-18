@@ -1,5 +1,7 @@
 package com.thoughtworks.ketsu.web;
 
+import com.thoughtworks.ketsu.infrastructure.core.Product;
+import com.thoughtworks.ketsu.infrastructure.core.ProductRepository;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
 import com.thoughtworks.ketsu.support.TestHelper;
@@ -8,8 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -22,6 +26,9 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(ApiTestRunner.class)
 public class ProductResourceTest extends ApiSupport{
+
+    @Inject
+    ProductRepository productRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -44,9 +51,13 @@ public class ProductResourceTest extends ApiSupport{
     }
 
     @Test
-    public void should_return_200_when_list_all_products(){
-        Response get = get("/products");
-        assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+    public void should_return_detail_when_list_all_products(){
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
 
+        Response get = get("/products");
+        final List<Map<String, Object>> res = get.readEntity(List.class);
+        assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        assertThat(res.size(), is(1));
+        assertThat(res.get(0).get("uri"), is("/products/" + String.valueOf(product.getId())));
     }
 }
