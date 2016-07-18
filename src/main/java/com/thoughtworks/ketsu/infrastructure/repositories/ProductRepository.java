@@ -18,8 +18,11 @@ public class ProductRepository implements com.thoughtworks.ketsu.infrastructure.
     public Product createProduct(Map<String, Object> info) {
 
         productMapper.saveProduct(info);
-
         int productId = Integer.valueOf(String.valueOf(info.get("id")));
+
+//        Product product = new ProductRecord(info);
+//        productMapper.saveProduct(product);
+//        int productId = product.getId();
 
         return productMapper.findById(productId);
     }

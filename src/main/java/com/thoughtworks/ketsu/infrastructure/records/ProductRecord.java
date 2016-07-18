@@ -13,12 +13,6 @@ public class ProductRecord implements Product {
     private String description;
     private float price;
 
-    public ProductRecord(){
-        this.id = 1;
-        this.name = "apple";
-        this.description = "red apple";
-        this.price = Float.valueOf("1.2");
-    }
 
     @Override
     public int getId() {
