@@ -2,6 +2,7 @@ package com.thoughtworks.ketsu.web;
 
 import com.thoughtworks.ketsu.infrastructure.core.User;
 import com.thoughtworks.ketsu.infrastructure.core.UserRepository;
+import com.thoughtworks.ketsu.infrastructure.records.OrderRecord;
 import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
@@ -44,7 +45,8 @@ public class UsersResource {
     @POST
     @Path("{userId}/orders")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createOrder(){
-        return Response.status(201).build();
+    public Response createOrder(@PathParam("userId") int userId,
+                                @Context Routes routes){
+        return Response.created(routes.orderUrl(new OrderRecord(userId, 1))).build();
     }
 }
