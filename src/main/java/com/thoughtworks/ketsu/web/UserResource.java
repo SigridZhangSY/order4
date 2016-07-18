@@ -1,5 +1,6 @@
 package com.thoughtworks.ketsu.web;
 
+import com.thoughtworks.ketsu.infrastructure.core.Order;
 import com.thoughtworks.ketsu.infrastructure.core.User;
 import com.thoughtworks.ketsu.infrastructure.core.UserRepository;
 import com.thoughtworks.ketsu.infrastructure.records.OrderRecord;
@@ -34,7 +35,7 @@ public class UserResource {
 
     @POST
     @Path("orders")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response createOrder(Map<String, Object> info,
                                 @Context Routes routes){
         if(info.getOrDefault("name", "").toString().trim().isEmpty() ||
@@ -55,8 +56,8 @@ public class UserResource {
 
     @GET
     @Path("orders")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String listAllOrders(){
-        return "OK";
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Order> listAllOrders(){
+        return user.listAllOrdersForUser();
     }
 }

@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.endsWith;
@@ -102,11 +103,15 @@ public class UsersResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_200_when_list_all_orders(){
+    public void should_return_details_when_list_all_orders(){
         User user = userRepository.createUser(TestHelper.userMap("john"));
         Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
         Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));
         Response get = get("/users/" + user.getId() + "/orders");
         assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final List<Map<String, Object>> res = get.readEntity(List.class);
+        assertThat(res.size(), is(1));
+        assertThat(res.get(0).get("uri"), is("/users/" + user.getId() + "/orders/" + order.getId()));
+
     }
 }

@@ -1,13 +1,16 @@
 package com.thoughtworks.ketsu.infrastructure.records;
 
 import com.thoughtworks.ketsu.infrastructure.core.Order;
+import com.thoughtworks.ketsu.web.jersey.Routes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by syzhang on 7/18/16.
  */
-public class OrderRecord implements Order {
+public class OrderRecord implements Order, Record {
     private int id;
     private int userId;
     private String name;
@@ -55,5 +58,22 @@ public class OrderRecord implements Order {
     @Override
     public List<OrderItemRecord> getItems() {
         return items;
+    }
+
+    @Override
+    public Map<String, Object> toJson(Routes routes) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> toRefJson(Routes routes) {
+        return new HashMap<String, Object>() {{
+            put("uri",routes.orderUrl(OrderRecord.this));
+            put("name",name);
+            put("address",address);
+            put("phone",phone);
+            put("created_at",time);
+        }};
+
     }
 }
