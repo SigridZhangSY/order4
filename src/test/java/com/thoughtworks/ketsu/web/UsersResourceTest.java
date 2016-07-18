@@ -77,12 +77,11 @@ public class UsersResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_uri_when_create_order(){
+    public void should_return_201_when_create_order_with_specified_parameter(){
         User user = userRepository.createUser(TestHelper.userMap("john"));
         Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
         Response post = post("/users/" + user.getId() + "/orders", TestHelper.orderMap("john",product.getId()));
         assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
-        assertThat(post.getLocation().toString(), endsWith("/users/" + user.getId() + "/orders/1"));
 
     }
 }

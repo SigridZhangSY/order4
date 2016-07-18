@@ -12,6 +12,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.Map;
 
 /**
  * Created by syzhang on 7/18/16.
@@ -32,7 +33,8 @@ public class UserResource {
     @POST
     @Path("orders")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createOrder(@Context Routes routes){
-        return Response.created(routes.orderUrl(new OrderRecord(user.getId(), 1))).build();
+    public Response createOrder(Map<String, Object> info,
+                                @Context Routes routes){
+        return Response.created(routes.orderUrl(user.createOrder(info))).build();
     }
 }

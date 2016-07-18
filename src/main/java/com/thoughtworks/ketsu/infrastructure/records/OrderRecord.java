@@ -17,14 +17,6 @@ public class OrderRecord implements Order {
     private String time;
     private List<OrderItemRecord> items;
 
-    public OrderRecord(int userId, int id){
-        this.userId = userId;
-        this.id = id;
-    }
-
-    public OrderRecord(){
-    }
-
     @Override
     public int getId() {
         return id;
