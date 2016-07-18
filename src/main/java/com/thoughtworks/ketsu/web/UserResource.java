@@ -52,4 +52,11 @@ public class UserResource {
         }
             return Response.created(routes.orderUrl(user.createOrder(info))).build();
     }
+
+    @GET
+    @Path("orders")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String listAllOrders(){
+        return "OK";
+    }
 }
