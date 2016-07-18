@@ -8,19 +8,20 @@ import java.util.Map;
  * Created by syzhang on 7/18/16.
  */
 public class ProductRecord implements Product {
-    private String id;
+    private int id;
     private String name;
     private String description;
     private float price;
 
     public ProductRecord(){
-        this.id = "1";
+        this.id = 1;
         this.name = "apple";
         this.description = "red apple";
         this.price = Float.valueOf("1.2");
     }
+
     @Override
-    public String getId() {
+    public int getId() {
         return id;
     }
 
