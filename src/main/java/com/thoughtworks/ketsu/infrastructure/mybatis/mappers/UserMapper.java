@@ -11,4 +11,5 @@ import java.util.Map;
 public interface UserMapper {
     int saveUser(@Param("info") Map<String, Object> info);
     User findUserById(@Param("userId") int userId);
+    User findUserByName(@Param("userName") String userName);
 }
