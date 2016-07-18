@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
+import java.util.HashMap;
+
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -41,6 +43,12 @@ public class UsersResourceTest extends ApiSupport {
     public void should_return_400_when_create_user_with_user_exists(){
         userRepository.createUser(TestHelper.userMap("john"));
         Response post = post("/users", TestHelper.userMap("john"));
+        assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
+    }
+
+    @Test
+    public void should_return_400_when_create_user_with_name_is_null(){
+        Response post = post("/users", new HashMap<String, Object>());
         assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
     }
 }

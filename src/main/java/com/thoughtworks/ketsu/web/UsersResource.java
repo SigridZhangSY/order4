@@ -26,6 +26,8 @@ public class UsersResource {
     public Response createUser(Map<String, Object> info,
                                @Context Routes routes,
                                @Context UserRepository userRepository){
+        if(info.getOrDefault("name", "").toString().trim().isEmpty())
+            throw new InvalidParameterException("name is required.");
         if(userRepository.findUserByNname(String.valueOf(info.get("name"))).isPresent())
             return Response.status(Response.Status.BAD_REQUEST).build();
 
