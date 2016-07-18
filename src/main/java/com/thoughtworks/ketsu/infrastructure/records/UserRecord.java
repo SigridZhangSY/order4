@@ -73,6 +73,11 @@ public class UserRecord implements User, Record {
     }
 
     @Override
+    public Order findOrderByIdForUser(int orderId) {
+        return orderMapper.findOrderById(orderId);
+    }
+
+    @Override
     public Map<String, Object> toRefJson(Routes routes) {
         return toJson(routes);
     }

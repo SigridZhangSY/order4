@@ -71,5 +71,15 @@ public class UserRepositoryTest {
         assertThat(order.getItems().size(), is(1));
     }
 
+    @Test
+    public void should_find_order_by_id_for_user(){
+        User user = userRepository.createUser(TestHelper.userMap("john"));
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));
+        Order order_res = user.findOrderByIdForUser(order.getId());
+        assertThat(order_res.getId(), is(order.getId()));
+        assertThat(order_res.getTotalPrice(), is(product.getPrice()*2));
+        assertThat(order_res.getItems().size(), is(1));
+    }
 
 }

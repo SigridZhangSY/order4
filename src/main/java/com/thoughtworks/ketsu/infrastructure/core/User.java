@@ -14,4 +14,6 @@ public interface User {
     Order createOrder(Map<String, Object> info);
 
     List<Order> listAllOrdersForUser();
+
+    Order findOrderByIdForUser(int orderId);
 }
