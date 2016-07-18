@@ -9,14 +9,14 @@ public class Routes {
 
     private final String baseUri;
 
-//    public Routes(UriInfo uriInfo) {
-//        baseUri = uriInfo.getBaseUri().toASCIIString();
-//    }
+    public Routes(UriInfo uriInfo) {
+        baseUri = uriInfo.getBaseUri().toASCIIString();
+    }
 
     public Routes() {
         baseUri = "/";
     }
 
-
+    public URI productUrl(Product product){return URI.create(baseUri + "products/" + product.getId());}
 
 }

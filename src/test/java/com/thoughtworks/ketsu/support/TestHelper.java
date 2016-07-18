@@ -19,5 +19,11 @@ public class TestHelper {
         }};
         return stackMap;
     }
-    
+    public static Map<String , Object> productMap(String name, String description, float price){
+        return new HashMap<String, Object>(){{
+            put("name", name);
+            put("description", description);
+            put("price", price);
+        }};
+    }
 }
