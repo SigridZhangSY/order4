@@ -1,5 +1,7 @@
 package com.thoughtworks.ketsu.web;
 
+import com.thoughtworks.ketsu.infrastructure.core.User;
+import com.thoughtworks.ketsu.infrastructure.core.UserRepository;
 import com.thoughtworks.ketsu.infrastructure.records.UserRecord;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
@@ -9,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Map;
 
 /**
  * Created by syzhang on 7/18/16.
@@ -19,7 +22,10 @@ public class UsersResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(@Context Routes routes){
-        return Response.created(routes.userUrl(new UserRecord(1, "John"))).build();
+    public Response createUser(Map<String, Object> info,
+                               @Context Routes routes,
+                               @Context UserRepository userRepository){
+        User user = userRepository.createUser(info);
+        return Response.created(routes.userUrl(user)).build();
     }
 }

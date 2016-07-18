@@ -27,10 +27,8 @@ public class UsersResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_uri_when_create_user(){
+    public void should_return_uri_when_create_user_with_specified_parameter(){
         Response post = post("/users", TestHelper.userMap("john"));
         assertThat(post.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
-        assertThat(post.getLocation().toString(), endsWith("/users/1"));
-
     }
 }
