@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -29,5 +31,14 @@ public class ProductRepositoryTest {
         assertThat(product.getName(), is("apple"));
         assertThat(product.getDescription(), is("red apple"));
         assertThat(product.getPrice(), is(Float.valueOf("1.2")));
+    }
+
+    @Test
+    public void should_list_all_products(){
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        List<Product> productList = productRepository.listAllProducts();
+
+        assertThat(productList.size(), is(1));
+        assertThat(productList.get(0).getId(), is(product.getId()));
     }
 }
