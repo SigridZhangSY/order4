@@ -7,6 +7,7 @@ import com.thoughtworks.ketsu.infrastructure.records.ProductRecord;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by syzhang on 7/18/16.
@@ -31,5 +32,10 @@ public class ProductRepository implements com.thoughtworks.ketsu.infrastructure.
     @Override
     public List<Product> listAllProducts() {
         return productMapper.listAll();
+    }
+
+    @Override
+    public Optional<Product> findProductById(int productId) {
+        return Optional.ofNullable(productMapper.findById(productId));
     }
 }
