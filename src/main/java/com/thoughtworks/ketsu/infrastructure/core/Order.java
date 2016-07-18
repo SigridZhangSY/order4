@@ -14,5 +14,6 @@ public interface Order {
     String getPhone();
     String getAddress();
     float getTotalPrice();
+    String getTime();
     List<OrderItemRecord> getItems();
 }

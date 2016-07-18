@@ -14,11 +14,15 @@ public class OrderRecord implements Order {
     private String phone;
     private String address;
     private float totalPrice;
+    private String time;
     private List<OrderItemRecord> items;
 
     public OrderRecord(int userId, int id){
         this.userId = userId;
         this.id = id;
+    }
+
+    public OrderRecord(){
     }
 
     @Override
@@ -49,6 +53,11 @@ public class OrderRecord implements Order {
     @Override
     public float getTotalPrice() {
         return totalPrice;
+    }
+
+    @Override
+    public String getTime() {
+        return time;
     }
 
     @Override
