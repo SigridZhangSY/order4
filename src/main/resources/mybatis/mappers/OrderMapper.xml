@@ -18,4 +18,10 @@
         FROM ORDERITEMS AS T LEFT JOIN ORDERS AS O
         ON T.order_id = O.id WHERE O.id = #{orderId}
     </select>
+    <select id="findOrders" resultMap="records.order">
+        SELECT
+        <include refid="columns.order"/>
+        FROM ORDERITEMS AS T LEFT JOIN ORDERS AS O
+        ON T.order_id = O.id
+    </select>
 </mapper>

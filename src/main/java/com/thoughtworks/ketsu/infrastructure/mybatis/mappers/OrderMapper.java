@@ -15,4 +15,6 @@ public interface OrderMapper {
     int saveOrderItems(@Param("list") List<Map<String, Object>> list);
 
     Order findOrderById(@Param("orderId") int orderId);
+
+    List<Order> findOrders(@Param("userId") int userId);
 }

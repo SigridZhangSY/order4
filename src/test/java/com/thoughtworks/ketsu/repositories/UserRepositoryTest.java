@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -56,4 +58,18 @@ public class UserRepositoryTest {
         assertThat(order.getTotalPrice(), is(product.getPrice()*2));
         assertThat(order.getItems().size(), is(1));
     }
+
+    @Test
+    public void should_list_orders_for_user(){
+        User user = userRepository.createUser(TestHelper.userMap("john"));
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));
+        List<Order> orderList = user.listAllOrdersForUser();
+        assertThat(orderList.size(), is(1));
+        assertThat(orderList.get(0).getId(), is(order.getId()));
+        assertThat(orderList.get(0).getTotalPrice(), is(product.getPrice()*2));
+        assertThat(order.getItems().size(), is(1));
+    }
+
+
 }
