@@ -3,6 +3,7 @@ package com.thoughtworks.ketsu.infrastructure.records;
 import com.thoughtworks.ketsu.infrastructure.core.Order;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,26 @@ public class OrderRecord implements Order, Record {
 
     @Override
     public Map<String, Object> toJson(Routes routes) {
-        return null;
+        Map<String, Object> map = new HashMap();
+        map.put("uri", routes.orderUrl(OrderRecord.this));
+        map.put("name", name);
+        map.put("address", address);
+        map.put("phone", phone);
+        map.put("total_price", totalPrice);
+        map.put("created_at", time);
+
+        List<Map<String, Object>> itemsMap = new ArrayList<Map<String, Object>>();
+        for(int i = 0; i < items.size(); i++){
+            Map<String, Object> itemMap = new HashMap();
+            itemMap.put("product_id", items.get(i).getProductId());
+            itemMap.put("quantity", items.get(i).getQuantity());
+            itemMap.put("amount", items.get(i).getAmount());
+            itemsMap.add(itemMap);
+        }
+
+        map.put("order_items", itemsMap);
+
+        return map;
     }
 
     @Override
