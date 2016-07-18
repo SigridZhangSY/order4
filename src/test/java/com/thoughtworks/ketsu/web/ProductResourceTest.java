@@ -71,6 +71,14 @@ public class ProductResourceTest extends ApiSupport{
 
     }
 
-    
+    @Test
+    public void should_return_404_when_product_not_exists(){
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        Response get = get("/products/" + (product.getId()+1));
+        assertThat(get.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
+
+
+    }
+
 
 }
