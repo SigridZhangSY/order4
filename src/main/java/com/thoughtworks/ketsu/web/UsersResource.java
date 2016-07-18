@@ -34,19 +34,26 @@ public class UsersResource {
         return Response.created(routes.userUrl(user)).build();
     }
 
-    @GET
     @Path("{userId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public User findUserById(@PathParam("userId") int userId,
-                             @Context UserRepository userRepository){
-        return userRepository.findUserById(userId).orElseThrow(() -> new NotFoundException("user not exists"));
+    public UserResource getUserResource(@PathParam("userId") int userId,
+                                        @Context UserRepository userRepository){
+        User user = userRepository.findUserById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+        return new UserResource(user);
     }
 
-    @POST
-    @Path("{userId}/orders")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createOrder(@PathParam("userId") int userId,
-                                @Context Routes routes){
-        return Response.created(routes.orderUrl(new OrderRecord(userId, 1))).build();
-    }
+//    @GET
+//    @Path("{userId}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public User findUserById(@PathParam("userId") int userId,
+//                             @Context UserRepository userRepository){
+//        return userRepository.findUserById(userId).orElseThrow(() -> new NotFoundException("user not exists"));
+//    }
+//
+//    @POST
+//    @Path("{userId}/orders")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response createOrder(@PathParam("userId") int userId,
+//                                @Context Routes routes){
+//        return Response.created(routes.orderUrl(new OrderRecord(userId, 1))).build();
+//    }
 }
