@@ -60,4 +60,12 @@ public class ProductResourceTest extends ApiSupport{
         assertThat(res.size(), is(1));
         assertThat(res.get(0).get("uri"), is("/products/" + String.valueOf(product.getId())));
     }
+
+    @Test
+    public void should_return_200_when_find_product_by_id(){
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        Response get = get("/products/" + product.getId());
+
+        assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+    }
 }
