@@ -3,6 +3,7 @@ package com.thoughtworks.ketsu.web;
 import com.thoughtworks.ketsu.infrastructure.core.User;
 import com.thoughtworks.ketsu.infrastructure.core.UserRepository;
 import com.thoughtworks.ketsu.infrastructure.records.UserRecord;
+import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
 import javax.ws.rs.POST;
@@ -25,6 +26,9 @@ public class UsersResource {
     public Response createUser(Map<String, Object> info,
                                @Context Routes routes,
                                @Context UserRepository userRepository){
+        if(userRepository.findUserByNname(String.valueOf(info.get("name"))).isPresent())
+            return Response.status(Response.Status.BAD_REQUEST).build();
+
         User user = userRepository.createUser(info);
         return Response.created(routes.userUrl(user)).build();
     }
