@@ -60,4 +60,12 @@ public class UserResource {
     public List<Order> listAllOrders(){
         return user.listAllOrdersForUser();
     }
+
+    @GET
+    @Path("orders/{orderId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String findOrderById(){
+        return "OK";
+    }
+
 }
