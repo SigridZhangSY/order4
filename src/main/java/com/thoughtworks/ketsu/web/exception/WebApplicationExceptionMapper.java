@@ -15,4 +15,5 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
             put("message", exception.getMessage());
         }}).build();
     }
+
 }

@@ -10,6 +10,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,8 +27,13 @@ public class UsersResource {
     public Response createUser(Map<String, Object> info,
                                @Context Routes routes,
                                @Context UserRepository userRepository){
-        if(info.getOrDefault("name", "").toString().trim().isEmpty())
-            throw new InvalidParameterException("name is required.");
+
+
+        if(info.getOrDefault("name", "").toString().trim().isEmpty()) {
+            List<String> list = new ArrayList<String>();
+            list.add("name");
+            throw new InvalidParameterException(list);
+        }
         if(userRepository.findUserByName(String.valueOf(info.get("name"))).isPresent())
             return Response.status(Response.Status.BAD_REQUEST).build();
 

@@ -4,12 +4,16 @@ import com.thoughtworks.ketsu.infrastructure.core.Product;
 import com.thoughtworks.ketsu.infrastructure.core.ProductRepository;
 import com.thoughtworks.ketsu.infrastructure.records.ProductRecord;
 import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
+import com.thoughtworks.ketsu.web.exception.NullParameterException;
+import com.thoughtworks.ketsu.web.exception.WebApplicationExceptionMapper;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +31,11 @@ public class ProductResource {
                                   @Context ProductRepository productRepository){
         if(info.getOrDefault("name", "").toString().trim().isEmpty() ||
                 info.getOrDefault("description", "").toString().trim().isEmpty() ||
-                    info.getOrDefault("price", "").toString().trim().isEmpty())
-            throw new InvalidParameterException("name, description and price are required.");
+                    info.getOrDefault("price", "").toString().trim().isEmpty()) {
+            throw new InvalidParameterException("name");
+        }
+
+
         Product product = productRepository.createProduct(info);
         return Response.created(routes.productUrl(product)).build();
     }
@@ -44,6 +51,6 @@ public class ProductResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Product findProductById(@PathParam("productId") int productId,
                                    @Context ProductRepository productRepository){
-        return productRepository.findProductById(productId).orElseThrow(() -> new NotFoundException("product not exists"));
+        return productRepository.findProductById(productId).orElseThrow(() -> new NotFoundException());
     }
 }
