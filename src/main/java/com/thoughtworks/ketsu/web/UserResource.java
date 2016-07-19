@@ -68,4 +68,11 @@ public class UserResource {
         return user.findOrderByIdForUser(orderId);
     }
 
+    @POST
+    @Path("orders/{orderId}/payment")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createPaymentForOrder(){
+        return Response.status(201).build();
+    }
+
 }
