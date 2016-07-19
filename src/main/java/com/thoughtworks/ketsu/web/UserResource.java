@@ -71,9 +71,10 @@ public class UserResource {
     @POST
     @Path("orders/{orderId}/payment")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPaymentForOrder(@PathParam("orderId") int orderId,
+    public Response createPaymentForOrder(Map<String, Object> info,
+                                          @PathParam("orderId") int orderId,
                                           @Context Routes routes){
-        return Response.created(routes.paymentUri(user.createPaymentForOrder(orderId))).build();
+        return Response.created(routes.paymentUri(user.createPaymentForOrder(info, orderId))).build();
     }
 
 }

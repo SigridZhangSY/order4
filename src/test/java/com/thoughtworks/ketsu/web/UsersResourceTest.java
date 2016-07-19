@@ -139,7 +139,7 @@ public class UsersResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_uri_when_create_payment_for_user(){
+    public void should_return_201_when_create_payment_for_user(){
         User user = userRepository.createUser(TestHelper.userMap("john"));
         Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
         Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));

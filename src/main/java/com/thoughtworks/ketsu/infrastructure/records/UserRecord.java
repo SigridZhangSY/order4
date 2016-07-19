@@ -80,10 +80,6 @@ public class UserRecord implements User, Record {
         return order.createPayment(info);
     }
 
-    @Override
-    public Payment createPaymentForOrder(int orderId) {
-        return new PaymentRecord(id, orderId);
-    }
 
     @Override
     public Order findOrderByIdForUser(int orderId) {
