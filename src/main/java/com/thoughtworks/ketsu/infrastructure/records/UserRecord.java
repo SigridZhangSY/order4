@@ -1,6 +1,7 @@
 package com.thoughtworks.ketsu.infrastructure.records;
 
 import com.thoughtworks.ketsu.infrastructure.core.Order;
+import com.thoughtworks.ketsu.infrastructure.core.Payment;
 import com.thoughtworks.ketsu.infrastructure.core.Product;
 import com.thoughtworks.ketsu.infrastructure.core.User;
 import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.OrderMapper;
@@ -70,6 +71,11 @@ public class UserRecord implements User, Record {
             put("uri", routes.userUrl(UserRecord.this));
             put("name", name);
         }};
+    }
+
+    @Override
+    public Payment createPaymentForOrder(int orderId) {
+        return new PaymentRecored(id, orderId);
     }
 
     @Override

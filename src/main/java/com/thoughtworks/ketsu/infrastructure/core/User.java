@@ -16,4 +16,6 @@ public interface User {
     List<Order> listAllOrdersForUser();
 
     Order findOrderByIdForUser(int orderId);
+
+    Payment createPaymentForOrder(int orderId);
 }
