@@ -149,4 +149,15 @@ public class UsersResourceTest extends ApiSupport {
         assertThat(post.getLocation().toString(), endsWith("/users/" + user.getId() + "/orders/" + order.getId() + "/payment"));
     }
 
+    @Test
+    public void should_return_400_when_create_payment_with_payment_exists(){
+        User user = userRepository.createUser(TestHelper.userMap("john"));
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));
+        Payment payment = user.createPaymentForOrder(TestHelper.paymentMap("CASH", Float.valueOf("100")), order.getId());
+
+        Response post = post("/users/" + user.getId() + "/orders/" + order.getId() + "/payment", TestHelper.paymentMap("CASH", Float.valueOf("100")));
+        assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
+    }
+
 }

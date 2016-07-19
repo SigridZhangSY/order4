@@ -3,6 +3,7 @@ package com.thoughtworks.ketsu.infrastructure.records;
 import com.thoughtworks.ketsu.infrastructure.core.Order;
 import com.thoughtworks.ketsu.infrastructure.core.Payment;
 import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.PaymentMapper;
+import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
 import javax.inject.Inject;
@@ -66,6 +67,8 @@ public class OrderRecord implements Order, Record {
 
     @Override
     public Payment createPayment(Map<String, Object> info) {
+        if(findPaymentForOrder().isPresent())
+            throw new InvalidParameterException("payment exists");
         info.put("order_id", id);
         paymentMapper.savePayment(info);
         return paymentMapper.findPaymentById(id);
