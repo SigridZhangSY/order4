@@ -4,7 +4,6 @@ import com.thoughtworks.ketsu.infrastructure.core.Product;
 import com.thoughtworks.ketsu.infrastructure.core.ProductRepository;
 import com.thoughtworks.ketsu.infrastructure.records.ProductRecord;
 import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
-import com.thoughtworks.ketsu.web.exception.NullParameterException;
 import com.thoughtworks.ketsu.web.exception.WebApplicationExceptionMapper;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
