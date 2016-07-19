@@ -42,19 +42,20 @@ public class UserRecord implements User, Record {
     public Order createOrder(Map<String, Object> info) {
         float totalPrice = 0;
         info.put("user_id", id);
-        orderMapper.saveOrder(info);
-        int orderId = Integer.valueOf(String.valueOf(info.get("id")));
+
+//        int orderId = Integer.valueOf(String.valueOf(info.get("id")));
         List<Map<String, Object>> items = (List<Map<String, Object>>)info.get("order_items");
         for(int i = 0; i < items.size(); i++){
             Optional<Product> product = Optional.ofNullable(productMapper.findById(Integer.valueOf(String.valueOf(items.get(i).get("product_id")))));
             if(product.isPresent() == false)
                 throw new InvalidParameterException("product not exists");
             items.get(i).put("amount", product.orElseThrow(() -> new NotFoundException("product not exists")).getPrice());
-            items.get(i).put("order_id", orderId);
+//            items.get(i).put("order_id", orderId);
         }
+        orderMapper.saveOrder(info);
+//        orderMapper.saveOrderItems(items);
 
-        orderMapper.saveOrderItems(items);
-
+        int orderId = Integer.valueOf(String.valueOf(info.get("id")));
         return orderMapper.findOrderById(orderId);
 
     }

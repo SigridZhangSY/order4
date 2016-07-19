@@ -4,6 +4,12 @@
     <insert id="saveOrder" useGeneratedKeys="true" keyProperty="info.id">
         INSERT INTO ORDERS (user_id, name, address, phone)
         VALUES(#{info.user_id}, #{info.name}, #{info.address}, #{info.phone});
+        SET @LAST_INSERT_ORDER_ID = LAST_INSERT_ID();
+        INSERT INTO ORDERITEMS (order_id, product_id, quantity, amount)
+        VALUES
+        <foreach collection="info.order_items" item="item" open="(" separator=","  close=")">
+            @LAST_INSERT_ORDER_ID, #{item.product_id}, #{item.quantity}, #{item.amount}
+        </foreach>
     </insert>
     <insert id="saveOrderItems" parameterType="java.util.List">
         INSERT INTO ORDERITEMS (order_id, product_id, quantity, amount)
