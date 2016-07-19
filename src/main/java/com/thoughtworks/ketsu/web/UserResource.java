@@ -74,6 +74,9 @@ public class UserResource {
     public Response createPaymentForOrder(Map<String, Object> info,
                                           @PathParam("orderId") int orderId,
                                           @Context Routes routes){
+        if(info.getOrDefault("pay_type", "").toString().trim().isEmpty() ||
+                info.getOrDefault("amount", "").toString().trim().isEmpty())
+            throw new InvalidParameterException("pay_type and amount are required");
         return Response.created(routes.paymentUri(user.createPaymentForOrder(info, orderId))).build();
     }
 

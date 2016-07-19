@@ -160,4 +160,16 @@ public class UsersResourceTest extends ApiSupport {
         assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
     }
 
+    @Test
+    public void should_return_400_when_create_payment_with_payType_is_null(){
+        User user = userRepository.createUser(TestHelper.userMap("john"));
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));
+        Map<String, Object> map = TestHelper.paymentMap("CASH", Float.valueOf("100"));
+        map.remove("pay_type");
+
+        Response post = post("/users/" + user.getId() + "/orders/" + order.getId() + "/payment", map);
+        assertThat(post.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
+    }
+
 }
