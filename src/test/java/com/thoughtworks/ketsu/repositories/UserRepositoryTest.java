@@ -100,7 +100,7 @@ public class UserRepositoryTest {
         Payment payment = user.createPaymentForOrder(TestHelper.paymentMap("CASH", Float.valueOf("100")), order.getId());
 
         Payment payment_res = order.findPaymentForOrder().orElseThrow(() -> new NotFoundException("payment not found"));
-        assertThat(payment.getId(), is(order.getUserId()));
+        assertThat(payment.getId(), is(order.getId()));
     }
 
 }
