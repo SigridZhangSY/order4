@@ -6,10 +6,7 @@ import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.PaymentMapper;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by syzhang on 7/18/16.
@@ -96,6 +93,11 @@ public class OrderRecord implements Order, Record {
         map.put("order_items", itemsMap);
 
         return map;
+    }
+
+    @Override
+    public Optional<Payment> findPaymentForOrder() {
+        return Optional.ofNullable(paymentMapper.findPaymentById(id));
     }
 
     @Override

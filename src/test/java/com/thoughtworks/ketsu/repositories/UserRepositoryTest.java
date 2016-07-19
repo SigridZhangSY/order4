@@ -92,4 +92,15 @@ public class UserRepositoryTest {
         assertThat(payment.getPayType(), is("CASH"));
     }
 
+    @Test
+    public void should_find_payment_for_order(){
+        User user = userRepository.createUser(TestHelper.userMap("john"));
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));
+        Payment payment = user.createPaymentForOrder(TestHelper.paymentMap("CASH", Float.valueOf("100")), order.getId());
+
+        Payment payment_res = order.findPaymentForOrder().orElseThrow(() -> new NotFoundException("payment not found"));
+        assertThat(payment.getId(), is(order.getUserId()));
+    }
+
 }
