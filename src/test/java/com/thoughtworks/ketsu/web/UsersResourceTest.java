@@ -173,13 +173,16 @@ public class UsersResourceTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_200_when_find_payment_for_order(){
+    public void should_return_detail_when_find_payment_for_order(){
         User user = userRepository.createUser(TestHelper.userMap("john"));
         Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
         Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));
+        Payment payment = user.createPaymentForOrder(TestHelper.paymentMap("CASH", Float.valueOf("100")), order.getId());
 
         Response get = get("/users/" + user.getId() + "/orders/" + order.getId() + "/payment");
         assertThat(get.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final Map<String, Object> payment_res = get.readEntity(Map.class);
+        assertThat(payment_res.get("uri"), is("/users/" + user.getId() + "/orders/" + order.getId() + "/payment"));
     }
 
 }

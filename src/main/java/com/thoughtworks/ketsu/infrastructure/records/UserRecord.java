@@ -76,7 +76,7 @@ public class UserRecord implements User, Record {
     @Override
     public Payment createPaymentForOrder(Map<String, Object> info, int orderId) {
         info.put("user_id", id);
-        Order order = orderMapper.findOrderById(orderId);
+        Order order = findOrderByIdForUser(orderId);
         return order.createPayment(info);
     }
 
@@ -86,6 +86,13 @@ public class UserRecord implements User, Record {
         Optional<Order> order = Optional.ofNullable(orderMapper.findOrderById(orderId));
 
         return order.orElseThrow(() -> new NotFoundException("Order not found"));
+    }
+
+    @Override
+    public Payment findPaymentForOrder(int orderId) {
+        Order order = findOrderByIdForUser(orderId);
+
+        return order.findPaymentForOrder().orElseThrow(() -> new NotFoundException("Payment not found"));
     }
 
     @Override

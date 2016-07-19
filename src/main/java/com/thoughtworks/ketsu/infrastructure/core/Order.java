@@ -22,4 +22,5 @@ public interface Order {
     Payment createPayment(Map<String, Object> info);
 
     Optional<Payment> findPaymentForOrder();
+
 }
