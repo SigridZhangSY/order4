@@ -82,4 +82,14 @@ public class UserRepositoryTest {
         assertThat(order_res.getItems().size(), is(1));
     }
 
+    @Test
+    public void should_save_and_find_payment(){
+        User user = userRepository.createUser(TestHelper.userMap("john"));
+        Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
+        Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));
+        Payment payment = user.createPaymentForOrder(TestHelper.paymentMap("CASH", Float.valueOf("100")), order.getId());
+        assertThat(payment.getId(), is(order.getUserId()));
+        assertThat(payment.getPayType(), is("CASH"));
+    }
+
 }

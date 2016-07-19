@@ -74,8 +74,15 @@ public class UserRecord implements User, Record {
     }
 
     @Override
+    public Payment createPaymentForOrder(Map<String, Object> info, int orderId) {
+        info.put("user_id", id);
+        Order order = orderMapper.findOrderById(orderId);
+        return order.createPayment(info);
+    }
+
+    @Override
     public Payment createPaymentForOrder(int orderId) {
-        return new PaymentRecored(id, orderId);
+        return new PaymentRecord(id, orderId);
     }
 
     @Override

@@ -26,4 +26,11 @@
         T.quantity as quantity,
         T.amount as amount
     </sql>
+    <sql id="payment">
+        P.order_id as orderId,
+        P.user_id as userId,
+        P.pay_type as payType,
+        P.amount as amount,
+        P.time as time
+    </sql>
 </mapper>

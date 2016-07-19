@@ -17,5 +17,7 @@ public interface User {
 
     Order findOrderByIdForUser(int orderId);
 
+    Payment createPaymentForOrder(Map<String, Object> info, int orderId);
+
     Payment createPaymentForOrder(int orderId);
 }

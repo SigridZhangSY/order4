@@ -5,16 +5,20 @@ import com.thoughtworks.ketsu.infrastructure.core.Payment;
 /**
  * Created by syzhang on 7/19/16.
  */
-public class PaymentRecored implements Payment {
+public class PaymentRecord implements Payment {
     int id;
     int userId;
     String payType;
     float amount;
     String time;
 
-    public PaymentRecored(int userId, int orderId){
+    public PaymentRecord(int userId, int orderId){
         this.id = orderId;
         this.userId = userId;
+    }
+
+    public PaymentRecord(){
+
     }
 
     @Override
