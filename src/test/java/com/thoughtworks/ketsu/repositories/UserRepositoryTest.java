@@ -88,7 +88,7 @@ public class UserRepositoryTest {
         Product product = productRepository.createProduct(TestHelper.productMap("apple", "red apple", Float.valueOf("1.2")));
         Order order = user.createOrder(TestHelper.orderMap("kayla", product.getId()));
         Payment payment = user.createPaymentForOrder(TestHelper.paymentMap("CASH", Float.valueOf("100")), order.getId());
-        assertThat(payment.getId(), is(order.getUserId()));
+        assertThat(payment.getId(), is(order.getId()));
         assertThat(payment.getPayType(), is("CASH"));
     }
 
