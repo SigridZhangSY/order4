@@ -80,4 +80,11 @@ public class UserResource {
         return Response.created(routes.paymentUri(user.createPaymentForOrder(info, orderId))).build();
     }
 
+    @GET
+    @Path("orders/{orderId}/payment")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String findPaymentForOrder(){
+        return "OK";
+    }
+
 }
