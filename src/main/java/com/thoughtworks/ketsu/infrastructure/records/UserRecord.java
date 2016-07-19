@@ -74,7 +74,9 @@ public class UserRecord implements User, Record {
 
     @Override
     public Order findOrderByIdForUser(int orderId) {
-        return orderMapper.findOrderById(orderId);
+        Optional<Order> order = Optional.ofNullable(orderMapper.findOrderById(orderId));
+
+        return order.orElseThrow(() -> new NotFoundException("Order not found"));
     }
 
     @Override
